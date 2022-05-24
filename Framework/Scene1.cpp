@@ -14,7 +14,7 @@ Scene1::Scene1(SDL_Window* sdlWindow_) {
 	balloonTexture = NULL;
 	map.OnCreate();
 
-	map.GetRules();
+	//map.GetRules();
 }
 
 bool Scene1::OnCreate() {
@@ -44,10 +44,10 @@ bool Scene1::OnCreate() {
 	int window_w, window_h;
 	SDL_GetWindowSize(window, &window_w, &window_h);
 	Matrix4 ndc = MMath::viewportNDC(window_w,window_h);
-	Matrix4 ortho =MMath::orthographic(-30.0f, 30.0f, -15.0f, 15.0f, 0.0f, 1.0f);
+	Matrix4 ortho =MMath::orthographic(-0.0f, 36.0f, -0.0f, 18.0f, 0.0f, 1.0f);
 
 	projectionMatrix = ndc * ortho;
-	map.Generate();
+
 	return true;
 }
 
@@ -60,11 +60,11 @@ void Scene1::Update(const float deltaTime) {
 	balloon->Update(deltaTime);
 	static float time = 0;
 	time += deltaTime;
-	if (time >= 1) {
+//	if (time >= 0.25f) {
 		//printf("abcd");
-
+		map.Generate();
 		time = 0;
-	}
+	//}
 }
 
 void Scene1::Render() {
@@ -77,7 +77,7 @@ void Scene1::Render() {
 	// Render the balloon. We first need to scale it. If we do not scale 
 	// the balloon texture, it will stretch out to the whole window.
 	// Try it out!
-
+	
 
 	RenderWave();
 	// Update screen
@@ -142,19 +142,21 @@ void Scene1::OnDestroy() {
 
 void Scene1::RenderWave()
 {
+	const int SCREEN_WIDTH = 960;
+	const int SCREEN_HEIGHT = 540;
 	for (size_t i = 0; i < HEIGHT; i++)
 	{
 		for (size_t j = 0; j < WIDTH; j++)
 		{
 			SDL_Rect dest;
 		//	std::cout << "I: " << i << " J: " << j << "\n";
-			Vec3 coords(i, j, 0); 
+			Vec3 coords(i+12, j+2, 0);
 			Vec3 projCoords=  projectionMatrix* (coords);
 			dest.x = projCoords.x;
 			dest.y = projCoords.y;
 
-			dest.w = 10;
-			dest.h = 10;
+			dest.w = 30;
+			dest.h = 30;
 			Vec4 colour;
 			switch (map.tiles[i][j]->type)
 			{
