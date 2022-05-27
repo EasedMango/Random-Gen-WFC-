@@ -14,7 +14,7 @@ class Scene1 : public Scene {
 	Body* balloon;
 	SDL_Texture* backgroundTexture;
 	SDL_Texture* balloonTexture;
-	WaveCollapse map;
+	WaveCollapse* map;
 	Matrix4 projectionMatrix;
 	/// <summary>
 	/// Load an image into a texture object.
