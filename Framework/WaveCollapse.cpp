@@ -88,6 +88,17 @@ void WaveCollapse::OnCreate()
 		weightSum += t->weight;
 		weightChecks.push_back(tile(t->types[0], weightSum));
 	}
+	for (size_t y = 0; y < HEIGHT; y++)
+	{
+
+
+		for (size_t x = 0; x < WIDTH; x++)
+		{
+			CheckRules(output.at(y).at(x));
+			
+
+		}
+	}
 	weightSum += 4;
 
 	srand(time(0));
